@@ -9,8 +9,9 @@
 <html>
 <head>
 <%@ include file="/common/ctx.jsp"%>
-
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/opinion/opinionAdd.js"></script>
 </head>
+
 
 
 
@@ -34,7 +35,7 @@
             <tr><td><label class="td_label">大类</label></td>
                 <td >
                     <select name="opdl" id="opdl" class="layui-select" style="width: 100%">
-                        <option>大类一</option>
+
                      </select>
                 </td>
 
@@ -97,9 +98,9 @@
                 <label class="td_label">附件</label>
             </td>
                 <td colspan="5">
-        <p><label class="td_label">文件1</label><input type="filename1" value="选择文件"/></p>
-        <p><label class="td_label">文件2</label><input type="filename2" value="选择文件"/> </p>
-        <p><label class="td_label">文件3</label><input type="filename3" value="选择文件"/></p>
+        <p><label class="td_label">文件1</label><input type="file" value="选择文件"/></p>
+        <p><label class="td_label">文件2</label><input type="file" value="选择文件"/> </p>
+        <p><label class="td_label">文件3</label><input type="file" value="选择文件"/></p>
         <p><label class="label_red">附件总大小不能超过200M，超过限制,将不能发送</label></p>
         </td>
 
