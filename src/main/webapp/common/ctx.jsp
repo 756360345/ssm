@@ -11,3 +11,8 @@
 <%--<script type="text/javascript" src="../js/util/date.js"></script>--%>
 <link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" media="all">
 <link rel="stylesheet" type="text/css" href="css/inclubd.css" media="all">
+<link href="css/all.css" rel="stylesheet" type="text/css">
+<link href="js/editor/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="js/editor/css/froala_editor.min.css" rel="stylesheet" type="text/css">
+
+

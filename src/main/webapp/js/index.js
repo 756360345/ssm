@@ -25,14 +25,14 @@ function selectLeftMenu() {
 				  ,click: function(node){
 					  var exist=$("li[lay-id='"+node.id+"']").length;
 
-					  alert(exist)
+
 
 						if (exist > 0) {//判断是否已经发开选项卡
 							element.tabChange('tabs', node.id);// 切换到已有的选项卡
 
 						} else {//如果没打开就新建一个选项卡
 							 if (null!=node.url) {
-							 	alert(node.url);
+
 								  element.tabAdd('tabs', {
 									  title:node.name//选m项卡的名称
 					                  //把这个页面嵌套进选项卡中

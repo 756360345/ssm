@@ -3,13 +3,13 @@
 <html>
 <head>
     <%@include file="/common/ctx.jsp"%>
-    <title>CRM客户关系管理系统</title>
+    <title>浪琴湾小区服务管理系统</title>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js"></script>
 </head>
     <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
-            <div class="layui-logo">客户关系管理系统</div>
+            <div class="layui-logo" style="color: gold">浪琴湾小区服务管理系统</div>
             <!-- 头部区域（可配合layui已有的水平导航） -->
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item"><a href="javascript:;">其它系统</a>

@@ -1,7 +1,9 @@
 package com.zking.ssm.system.model;
 
-import java.io.Serializable;
+import lombok.ToString;
 
+import java.io.Serializable;
+@ToString
 public class Module implements Serializable{
     private String id;
 
