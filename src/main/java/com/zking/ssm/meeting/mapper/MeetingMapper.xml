@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zking.ssm.meeting.mapper.MeetingMapper">
+
+  <resultMap id="BaseResultMap" type="com.zking.ssm.meeting.model.Meeting">
+    <constructor>
+      <arg column="meeid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="meename" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="meezt" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="meecc" javaType="java.lang.String" jdbcType="VARCHAR" />
+
+      <arg column="meecbz" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="meezksj" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="meeaddress" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="meecjry" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="meelxr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="meetel" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="meebmrs" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="column">
+    meeid,meename,meezt,meecc,meecbz,meezksj,meeaddress,meecjry,meelxr,meetel,meebmrs
+  </sql>
+  <insert id="insert" parameterType="com.zking.ssm.meeting.model.Meeting">
+    insert into x_meeting (meeid, meename, meezt, 
+      meecc, meetype, meecbz, 
+      meezksj, meeaddress, meecjry, 
+      meelxr, meetel, meebmrs
+      )
+    values (#{meeid,jdbcType=VARCHAR}, #{meename,jdbcType=VARCHAR}, #{meezt,jdbcType=VARCHAR}, 
+      #{meecc,jdbcType=VARCHAR}, #{meetype,jdbcType=VARCHAR}, #{meecbz,jdbcType=VARCHAR}, 
+      #{meezksj,jdbcType=TIMESTAMP}, #{meeaddress,jdbcType=VARCHAR}, #{meecjry,jdbcType=VARCHAR}, 
+      #{meelxr,jdbcType=VARCHAR}, #{meetel,jdbcType=VARCHAR}, #{meebmrs,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.meeting.model.Meeting">
+    insert into x_meeting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="meeid != null">
+        meeid,
+      </if>
+      <if test="meename != null">
+        meename,
+      </if>
+      <if test="meezt != null">
+        meezt,
+      </if>
+      <if test="meecc != null">
+        meecc,
+      </if>
+      <if test="meetype != null">
+        meetype,
+      </if>
+      <if test="meecbz != null">
+        meecbz,
+      </if>
+      <if test="meezksj != null">
+        meezksj,
+      </if>
+      <if test="meeaddress != null">
+        meeaddress,
+      </if>
+      <if test="meecjry != null">
+        meecjry,
+      </if>
+      <if test="meelxr != null">
+        meelxr,
+      </if>
+      <if test="meetel != null">
+        meetel,
+      </if>
+      <if test="meebmrs != null">
+        meebmrs,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="meeid != null">
+        #{meeid,jdbcType=VARCHAR},
+      </if>
+      <if test="meename != null">
+        #{meename,jdbcType=VARCHAR},
+      </if>
+      <if test="meezt != null">
+        #{meezt,jdbcType=VARCHAR},
+      </if>
+      <if test="meecc != null">
+        #{meecc,jdbcType=VARCHAR},
+      </if>
+      <if test="meetype != null">
+        #{meetype,jdbcType=VARCHAR},
+      </if>
+      <if test="meecbz != null">
+        #{meecbz,jdbcType=VARCHAR},
+      </if>
+      <if test="meezksj != null">
+        #{meezksj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meeaddress != null">
+        #{meeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="meecjry != null">
+        #{meecjry,jdbcType=VARCHAR},
+      </if>
+      <if test="meelxr != null">
+        #{meelxr,jdbcType=VARCHAR},
+      </if>
+      <if test="meetel != null">
+        #{meetel,jdbcType=VARCHAR},
+      </if>
+      <if test="meebmrs != null">
+        #{meebmrs,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryMeeting" parameterType="com.zking.ssm.meeting.model.Meeting" resultType="com.zking.ssm.meeting.model.Meeting">
+    SELECT
+    meeid,meename,meezt,meecc,meecbz,meezksj,meeaddress,meecjry,meelxr,meetel,meebmrs,dc.ccname,dz.cbzname FROM x_meeting m
+    LEFT JOIN (SELECT dicvalue ccid,dicname ccname FROM x_dict WHERE dictype='meecc') dc ON m.meecc=dc.ccid
+    LEFT JOIN (SELECT dicvalue cbzid,dicname cbzname FROM x_dict WHERE dictype='meecbz') dz ON m.meecbz=dz.cbzid
+    where 1=1
+      <if test="null!=meezt and ''!=meezt">
+         and meezt like concat(concat('%',#{meezt}),'%')
+      </if>
+      <if test="null!=meename and ''!=meename">
+        and meename like concat(concat('%',#{meename}),'%')
+      </if>
+      <if test="null!=meecc and ''!=meecc">
+        and meecc=#{meecc})
+      </if>
+      <if test="null!=meezksj and ''!=meezksj">
+        and meezksj =#{meezksj}
+      </if>
+      <if test="null!=meeaddress and ''!=meeaddress">
+        and meeaddress like concat(concat('%',#{meeaddress}),'%')
+      </if>
+      <if test="null!=meelxr and ''!=meelxr">
+        and meelxr like concat(concat('%',#{meelxr}),'%')
+      </if>
+      <if test="null!=meecjry and ''!=meecjry">
+        and meecjry like concat(concat('%',#{meecjry}),'%')
+      </if>
+      <if test="null!=meetel and ''!=meetel">
+        and meetel like concat(concat('%',#{meetel}),'%')
+      </if>
+
+    order by meezksj desc
+  </select>
+</mapper>
