@@ -9,26 +9,35 @@
 <html>
 <head>
 <%@ include file="/common/ctx.jsp"%>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/opinion/opinionAdd.js"></script>
+    <script type="text/javascript" src="${ctx}/js/opinion/opinionAdd.js"></script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#test1' //指定元素
+            });
+        });
+    </script>
+
+
 </head>
-
-
-
-
-
 
 <body style="background-color: #e6ecf5">
 <div class="book_con01">
 
 
-    <form id="form_demo" >   <p class="book_p">
+    <form id="form_demo"  class="layui-form" method="post">   <p class="book_p">
         <table class="book_table" border="1" cellpadding="10">
             <tr><td colspan="4" style="text-align: center">社情民意填报内容</td>
             </tr>
             <tr>
                 <td>  <label class="td_label">来稿标题</label><i class="i_start"></i>
                 </td>
-                <td colspan="3"><input type="text" class="book_input03" name ="oplgbt" minlength="2"  required /></td>
+                <td colspan="3">
+                    <input type="text" name="oplgbt"  required lay-verify="required"
+                           placeholder="请输入标题" autocomplete="off" class="layui-input">
+                </td>
 
             </tr>
 
@@ -48,40 +57,52 @@
 
             </tr>
             <tr><td><label class="td_label">来稿人/单位</label></td>
-                <td ><input type="text" name="oplgrordw" class="book_input03"/></td>
+                <td >
+                    <input type="text" name="oplgrordw"  required lay-verify="required"
+                           placeholder="请输入来稿人" autocomplete="off" class="layui-input">
+                </td>
 
                 <td><label class="td_label">联系电话</label></td>
                 <td>
-                    <input type="text" name="optel" class="book_input03"/>
+
+                    <input type="text" name="optel"  required lay-verify="required"
+                           placeholder="请输入联系方式" autocomplete="off" class="layui-input">
                 </td>
 
             </tr>
             <tr> <td><label class="td_label">报送人身份</label></td>
                 <td >
                     <select name="opbsrsf" class="layui-select" style="width: 100%">
-                        <option>市政协委</option>
-                        <option>区政协委员</option>
-                        <option>党派成员</option>
-                        <option>特约信息员</option>
+
                     </select>
                 </td>
                 <td><label class="td_label">报送时间</label></td>
                 <td>
-                    <input type="date" name="opbssj" class="book_input03"/>
+                    <div class="layui-inline" style="width: 100%"> <!-- 注意：这一层元素并不是必须的 -->
+                        <input type="text" placeholder="请选择日期时间" required lay-verify="required"
+                               name="opbssj" class="layui-input" id="test1">
+                    </div>
                 </td>
 
             </tr>
             <tr> <td><label class="td_label">报送人</label></td>
                 <td colspan="3">
-                    <input type="text" name="opbsr" class="book_input03"/>
+                    <input type="text" name="opbsr"  required lay-verify="required"
+                           placeholder="请输入报送人" autocomplete="off" class="layui-input">
                 </td>
             </tr>
             <tr><td><label class="td_label">签发领导</label></td>
-                <td ><input type="text" name="opqfld" class="book_input03"/></td>
+                <td>
+                    <input type="text" name="opqfld"  required lay-verify="required"
+                           placeholder="请输入" autocomplete="off" class="layui-input">
+                </td>
 
                 <td><label class="td_label">是否公开</label></td>
-                <td style="text-align: center">
-                    <input type="radio" class="input_radio" checked="checked" name="radio01"/><a>是</a><input type="radio" class="input_radio" name="radio01"/><a>否</a>
+                <td>
+                    <div class="layui-input-block" style="margin-left: 45px">
+                        <input type="radio" name="pub" value="1" title="男" checked>
+                        <input type="radio" name="pub" value="2" title="女" >
+                    </div>
                 </td>
 
             </tr>
@@ -89,7 +110,7 @@
 
             <tr>
                 <td><label class="td_label">具体内容</label></td><td colspan="3">
-                <textarea  class="textArae" id="editor" ></textarea>
+                <textarea  class="textArae" name="opjtnr" id="editor" ></textarea>
             </td>
 
             </tr>
@@ -109,7 +130,8 @@
 
         </table>
         </p>
-        <p class="book_foot"><input type="submit" value="提交提案"/><input type="button" value="存为草稿"/><input type="button" value="重置"/><input type="button" value="取消"/></p></form>
+        <p class="book_foot"><button class="layui-btn" lay-submit lay-filter="add">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button></form>
 </div>
 
 

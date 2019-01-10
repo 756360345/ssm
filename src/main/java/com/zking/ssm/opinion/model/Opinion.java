@@ -29,7 +29,7 @@ public class Opinion {
 
     private String opjtnr;
 
-    private String fileid;
+    private String fileid;this.userid = userid;
 
     private Integer proid;
 
@@ -38,7 +38,7 @@ public class Opinion {
     public Opinion(Integer opid, String oplgbt, Integer userid, String opltype, String opdl, String opxl, String oplgrordw, String optel, String opbsrsf, Date opbssj, String opbsr, String opqfld, String opjtnr, String fileid, Integer proid, String pub) {
         this.opid = opid;
         this.oplgbt = oplgbt;
-        this.userid = userid;
+
         this.opltype = opltype;
         this.opdl = opdl;
         this.opxl = opxl;

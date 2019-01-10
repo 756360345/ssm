@@ -1,7 +1,36 @@
 $(function(){
-    initXL();
+
+    layui.use(['form','laydate' ],function() {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        form.on('submit(add)', function(data) {
+            var time = data.field;
+            time.opbssj=new Date(time.opbssj);
+            //console.log(data.field);
+
+            $.ajax({
+                url : "opinion/Addopinion",
+                data : time,
+                dataType : "json",
+                type : "post",
+                async : false,
+                success : function(data) {
+                    if(data.success){
+
+                        layer.alert(data.message);
+                        window.location.reload();
+                    }else{
+                        layer.alert(data.message);
+                    }
+                }
+            });
+
+        });
+    });
     initDL();
-    initBsr()
+    initXL();
+    initBsr();
+
 });
 //初始化大类
 function initDL() {
