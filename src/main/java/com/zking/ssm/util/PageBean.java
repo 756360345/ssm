@@ -12,7 +12,7 @@ public class PageBean implements Serializable {
 	//页码
 	private int page=1;
 	//每页显示记录数
-	private int rows=10;
+	private int rows=3;
 	//总记录数
 	private int total=0;
 	//是否分页

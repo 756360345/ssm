@@ -1,8 +1,12 @@
 package com.zking.ssm.opinion.model;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.ToString;
 
-public class Opinion {
+import java.io.Serializable;
+import java.util.Date;
+@ToString
+public class Opinion implements Serializable{
     private Integer opid;
 
     private String oplgbt;
@@ -20,25 +24,48 @@ public class Opinion {
     private String optel;
 
     private String opbsrsf;
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date opbssj;
 
     private String opbsr;
 
     private String opqfld;
 
+    private String pub;
+
     private String opjtnr;
 
-    private String fileid;this.userid = userid;
+    private String fileid;
 
     private Integer proid;
 
-    private String pub;
+    private String optjr;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date optjtime;
 
-    public Opinion(Integer opid, String oplgbt, Integer userid, String opltype, String opdl, String opxl, String oplgrordw, String optel, String opbsrsf, Date opbssj, String opbsr, String opqfld, String opjtnr, String fileid, Integer proid, String pub) {
+    private String start;
+    private String end;
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public Opinion(Integer opid, String oplgbt, Integer userid, String opltype, String opdl, String opxl, String oplgrordw, String optel, String opbsrsf, Date opbssj, String opbsr, String opqfld, String pub, String opjtnr, String fileid, Integer proid, String optjr, Date optjtime) {
         this.opid = opid;
         this.oplgbt = oplgbt;
-
+        this.userid = userid;
         this.opltype = opltype;
         this.opdl = opdl;
         this.opxl = opxl;
@@ -48,10 +75,12 @@ public class Opinion {
         this.opbssj = opbssj;
         this.opbsr = opbsr;
         this.opqfld = opqfld;
+        this.pub = pub;
         this.opjtnr = opjtnr;
         this.fileid = fileid;
         this.proid = proid;
-        this.pub = pub;
+        this.optjr = optjr;
+        this.optjtime = optjtime;
     }
 
     public Opinion() {
@@ -154,6 +183,14 @@ public class Opinion {
         this.opqfld = opqfld;
     }
 
+    public String getPub() {
+        return pub;
+    }
+
+    public void setPub(String pub) {
+        this.pub = pub;
+    }
+
     public String getOpjtnr() {
         return opjtnr;
     }
@@ -178,11 +215,19 @@ public class Opinion {
         this.proid = proid;
     }
 
-    public String getPublic() {
-        return pub;
+    public String getOptjr() {
+        return optjr;
     }
 
-    public void setPublic(String pub) {
-        this.pub = pub;
+    public void setOptjr(String optjr) {
+        this.optjr = optjr;
+    }
+
+    public Date getOptjtime() {
+        return optjtime;
+    }
+
+    public void setOptjtime(Date optjtime) {
+        this.optjtime = optjtime;
     }
 }

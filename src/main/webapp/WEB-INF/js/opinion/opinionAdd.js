@@ -5,9 +5,9 @@ $(function(){
         var laydate = layui.laydate;
         form.on('submit(add)', function(data) {
             var time = data.field;
-            time.opbssj=new Date(time.opbssj);
+            // time.opbssj=new Date(time.opbssj);
+            time.opbssj = new Date(time.opbssj);
             //console.log(data.field);
-
             $.ajax({
                 url : "opinion/Addopinion",
                 data : time,
@@ -16,11 +16,10 @@ $(function(){
                 async : false,
                 success : function(data) {
                     if(data.success){
-
-                        layer.alert(data.message);
+                        alert(data.message);
                         window.location.reload();
                     }else{
-                        layer.alert(data.message);
+                        alert(data.message);
                     }
                 }
             });
@@ -92,3 +91,5 @@ function initBsr() {
         }
     });
 }
+
+

@@ -11,7 +11,7 @@ $(function() {
 });
 function selectLeftMenu() {
 	$.ajax({
-		url : rootPath+"/Module/getModule",
+		url : "Module/getModule",
 		type : "post",
 		data:{'pid':'-1'},
 		dataType : "json",

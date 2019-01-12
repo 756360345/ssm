@@ -16,7 +16,7 @@ public class PageAspect {
 
     @Around("execution(* *..*Service.*Pager(..))")
     public Object invoke(ProceedingJoinPoint args) throws Throwable {
-        
+
         Object[] prames = args.getArgs();
         PageBean pageBean = null;
         for (Object prame : prames) {

@@ -15,15 +15,17 @@
       <arg column="opbssj" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="opbsr" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="opqfld" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pub" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="opjtnr" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="fileid" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="proid" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="pub" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="optjr" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="optjtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     opid, oplgbt, userid, opltype, opdl, opxl, oplgrordw, optel, opbsrsf, opbssj, opbsr, 
-    opqfld, opjtnr, fileid, proid, pub
+    opqfld, pub, opjtnr, fileid, proid, optjr, optjtime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,30 +33,60 @@
     from x_opinion
     where opid = #{opid,jdbcType=INTEGER}
   </select>
+  <select id="queryOpinionPager" resultType="map" parameterType="com.zking.ssm.opinion.model.Opinion">
+    SELECT opid,oplgbt,userid,xd1.dicname AS opltype,opdl,opxl,oplgrordw,optel,xd2.dicname AS opbsrsf,opbsr,opqfld,pub,opjtnr,fileid,
+    proid,optjr,optjtime
+    FROM X_Opinion xo LEFT JOIN x_dict xd1  ON xo.opltype=xd1.dicvalue AND xd1.dictype='opltype'
+    LEFT JOIN x_dict xd2 ON xo.opbsrsf=xd2.dicvalue AND xd2.dictype='bsr'
+    where 1=1
+    <if test="null!=oplgbt and ''!=oplgbt">
+      AND  oplgbt like concat(concat('%',#{oplgbt}),'%')
+    </if>
+    <if test="null!=opbsrsf and ''!=opbsrsf">
+      AND opbsrsf =#{opbsrsf}
+    </if>
+    <if test="null!=optjr and ''!=optjr">
+      AND optjr like concat(concat('%',#{optjr}),'%')
+    </if>
+    <if test="null!=opbsr and ''!=opbsr">
+      AND opbsr LIKE  concat(concat('%',#{opbsr}),'%')
+    </if>
+    <if test="null!=opltype and ''!=opltype">
+      AND opltype =#{opltype}
+    </if>
+    <if test="null!=start and ''!=start">
+      AND opbssj &gt;=#{start}
+    </if>
+    <if test="null!=end and ''!=end">
+      AND opbssj &lt;=#{end}
+    </if>
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from x_opinion
     where opid = #{opid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zking.ssm.opinion.model.Opinion" >
-    insert into x_opinion (opid, oplgbt, userid, 
-      opltype, opdl, opxl, 
+    insert into x_opinion ( oplgbt, userid,
+      opdl, opxl,
       oplgrordw, optel, opbsrsf, 
       opbssj, opbsr, opqfld, 
-      opjtnr, fileid, proid, 
-      pub)
-    values (#{opid,jdbcType=INTEGER}, #{oplgbt,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
-      #{opltype,jdbcType=VARCHAR}, #{opdl,jdbcType=VARCHAR}, #{opxl,jdbcType=VARCHAR}, 
+      pub, opjtnr, fileid, 
+       optjr
+      )
+    values (#{oplgbt,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER},
+       #{opdl,jdbcType=VARCHAR}, #{opxl,jdbcType=VARCHAR},
       #{oplgrordw,jdbcType=VARCHAR}, #{optel,jdbcType=VARCHAR}, #{opbsrsf,jdbcType=VARCHAR}, 
       #{opbssj,jdbcType=TIMESTAMP}, #{opbsr,jdbcType=VARCHAR}, #{opqfld,jdbcType=VARCHAR}, 
-      #{opjtnr,jdbcType=VARCHAR}, #{fileid,jdbcType=VARCHAR}, #{proid,jdbcType=INTEGER}, 
-      #{pub,jdbcType=VARCHAR})
+      #{pub,jdbcType=VARCHAR}, #{opjtnr,jdbcType=VARCHAR}, #{fileid,jdbcType=VARCHAR}, 
+      #{optjr,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zking.ssm.opinion.model.Opinion" >
     insert into x_opinion
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="opid != null" >
-        opid,
-      </if>
+
       <if test="oplgbt != null" >
         oplgbt,
       </if>
@@ -88,6 +120,9 @@
       <if test="opqfld != null" >
         opqfld,
       </if>
+      <if test="pub != null" >
+        pub,
+      </if>
       <if test="opjtnr != null" >
         opjtnr,
       </if>
@@ -97,14 +132,13 @@
       <if test="proid != null" >
         proid,
       </if>
-      <if test="pub != null" >
-        pub,
+      <if test="optjr != null" >
+        optjr,
       </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="opid != null" >
-        #{opid,jdbcType=INTEGER},
-      </if>
+
       <if test="oplgbt != null" >
         #{oplgbt,jdbcType=VARCHAR},
       </if>
@@ -138,6 +172,9 @@
       <if test="opqfld != null" >
         #{opqfld,jdbcType=VARCHAR},
       </if>
+      <if test="pub != null" >
+        #{pub,jdbcType=VARCHAR},
+      </if>
       <if test="opjtnr != null" >
         #{opjtnr,jdbcType=VARCHAR},
       </if>
@@ -147,9 +184,10 @@
       <if test="proid != null" >
         #{proid,jdbcType=INTEGER},
       </if>
-      <if test="pub != null" >
-        #{pub,jdbcType=VARCHAR},
+      <if test="optjr != null" >
+        #{optjr,jdbcType=VARCHAR},
       </if>
+
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.opinion.model.Opinion" >
@@ -188,6 +226,9 @@
       <if test="opqfld != null" >
         opqfld = #{opqfld,jdbcType=VARCHAR},
       </if>
+      <if test="pub != null" >
+        pub = #{pub,jdbcType=VARCHAR},
+      </if>
       <if test="opjtnr != null" >
         opjtnr = #{opjtnr,jdbcType=VARCHAR},
       </if>
@@ -197,8 +238,11 @@
       <if test="proid != null" >
         proid = #{proid,jdbcType=INTEGER},
       </if>
-      <if test="pub != null" >
-        pub = #{pub,jdbcType=VARCHAR},
+      <if test="optjr != null" >
+        optjr = #{optjr,jdbcType=VARCHAR},
+      </if>
+      <if test="optjtime != null" >
+        optjtime = #{optjtime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where opid = #{opid,jdbcType=INTEGER}
@@ -216,10 +260,18 @@
       opbssj = #{opbssj,jdbcType=TIMESTAMP},
       opbsr = #{opbsr,jdbcType=VARCHAR},
       opqfld = #{opqfld,jdbcType=VARCHAR},
+      pub = #{pub,jdbcType=VARCHAR},
       opjtnr = #{opjtnr,jdbcType=VARCHAR},
       fileid = #{fileid,jdbcType=VARCHAR},
       proid = #{proid,jdbcType=INTEGER},
-      pub = #{pub,jdbcType=VARCHAR}
+      optjr = #{optjr,jdbcType=VARCHAR},
+      optjtime = #{optjtime,jdbcType=TIMESTAMP}
+    where opid = #{opid,jdbcType=INTEGER}
+  </update>
+  <update id="UpdateType" parameterType="com.zking.ssm.opinion.model.Opinion">
+     update x_opinion
+    set
+      opltype = 'w2'
     where opid = #{opid,jdbcType=INTEGER}
   </update>
 </mapper>

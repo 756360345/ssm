@@ -18,6 +18,8 @@
                 elem: '#test1' //指定元素
             });
         });
+
+
     </script>
 
 
@@ -78,9 +80,10 @@
                 </td>
                 <td><label class="td_label">报送时间</label></td>
                 <td>
-                    <div class="layui-inline" style="width: 100%"> <!-- 注意：这一层元素并不是必须的 -->
-                        <input type="text" placeholder="请选择日期时间" required lay-verify="required"
-                               name="opbssj" class="layui-input" id="test1">
+                    <div class="layui-input-block" style="width: 100%;margin-left: 0px" >
+                        <div style="width: 100%;">
+                            <input type="text"  placeholder="请选择" name="opbssj" id="test1" class="layui-input">
+                        </div>
                     </div>
                 </td>
 
@@ -100,8 +103,8 @@
                 <td><label class="td_label">是否公开</label></td>
                 <td>
                     <div class="layui-input-block" style="margin-left: 45px">
-                        <input type="radio" name="pub" value="1" title="男" checked>
-                        <input type="radio" name="pub" value="2" title="女" >
+                        <input type="radio" name="pub" value="是" title="是" checked>
+                        <input type="radio" name="pub" value="否" title="否" >
                     </div>
                 </td>
 
