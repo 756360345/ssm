@@ -11,12 +11,30 @@
 <%@ include file="/common/ctx.jsp"%>
     <script type="text/javascript" src="${ctx}/js/opinion/opinionAdd.js"></script>
     <script type="text/javascript">
-        layui.use('laydate', function(){
+        layui.use('laydate','upload', function(){
             var laydate = layui.laydate;
+            var $ = layui.jquery
+                ,upload = layui.upload;
             //执行一个laydate实例
             laydate.render({
                 elem: '#test1' //指定元素
             });
+            //多图片上传
+            upload.render({
+                elem: '#test2'
+                ,url: '/upload/'
+                ,multiple: true
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                    });
+                }
+                ,done: function(res){
+                    //上传完毕
+                }
+            });
+
         });
 
 
@@ -43,18 +61,17 @@
 
             </tr>
 
-            <tr><td><label class="td_label">大类</label></td>
+            <tr><td><label class="td_label">单位类型</label></td>
                 <td >
-                    <select name="opdl" id="opdl" class="layui-select" style="width: 100%">
+                    <select name="opdwtype" id="opdwtype" class="layui-select" style="width: 100%">
 
                      </select>
                 </td>
 
-                <td><label class="td_label">小类</label></td>
+                <td><label class="td_label">报送人</label></td>
                 <td>
-                    <select name="opxl" id="opxl" class="layui-select" style="width: 100%">
-                        <option>大类一</option>
-                    </select>
+                    <input type="text" name="opbsr"  required lay-verify="required"
+                           placeholder="请输入报送人" autocomplete="off" class="layui-input">
                 </td>
 
             </tr>
@@ -88,12 +105,7 @@
                 </td>
 
             </tr>
-            <tr> <td><label class="td_label">报送人</label></td>
-                <td colspan="3">
-                    <input type="text" name="opbsr"  required lay-verify="required"
-                           placeholder="请输入报送人" autocomplete="off" class="layui-input">
-                </td>
-            </tr>
+
             <tr><td><label class="td_label">签发领导</label></td>
                 <td>
                     <input type="text" name="opqfld"  required lay-verify="required"
@@ -122,10 +134,24 @@
                 <label class="td_label">附件</label>
             </td>
                 <td colspan="5">
-        <p><label class="td_label">文件1</label><input type="file" value="选择文件"/></p>
-        <p><label class="td_label">文件2</label><input type="file" value="选择文件"/> </p>
-        <p><label class="td_label">文件3</label><input type="file" value="选择文件"/></p>
-        <p><label class="label_red">附件总大小不能超过200M，超过限制,将不能发送</label></p>
+                    <div class="layui-upload">
+                        <div class="layui-upload-list">
+                            <table class="layui-table">
+                                <thead>
+                                <tr><th>文件名</th>
+                                    <th>大小</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr></thead>
+                                <tbody id="demoList"></tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                        <button type="button" class="layui-btn" id="testListAction" >开始上传</button>
+                    </div>
+        <p><label style="color: red">附件总大小不能超过50M，超过限制,将不能发送</label></p>
+        <input type="hidden" id="fileid" name="fileid" value="${fileid}">
+
         </td>
 
         </tr>

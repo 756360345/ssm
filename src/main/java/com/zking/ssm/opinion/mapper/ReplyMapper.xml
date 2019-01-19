@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.opinion.mapper.ReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.opinion.model.Reply" >
+    <constructor >
+      <idArg column="repid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="repname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="repdw" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="caidate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="rephfnr" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="repdworr" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="repdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    repid, repname, repdw, caidate, rephfnr, repdworr, repdate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from x_reply
+    where repid = #{repid,jdbcType=INTEGER}
+  </select>
+  <select id="queryReplyLst" resultType="com.zking.ssm.opinion.model.Reply"
+          parameterType="com.zking.ssm.opinion.model.Reply">
+    SELECT repid,repname,caidate,rephfnr,repdworr,repdate,xd.dicname AS repdw FROM x_reply xr LEFT JOIN x_dict xd ON xr.repdw = xd.dicvalue AND dictype='opdwtype'
+     WHERE  1=1 AND  rephfnr IS NULL
+    <if test="null!=repid and 0!=repid">
+      AND  repid like concat(concat('%',#{repid}),'%')
+    </if>
+    <if test="null!=repname and ''!=repname">
+      AND  repname like concat(concat('%',#{repname}),'%')
+    </if>
+    <if test="null!=repdw and ''!=repdw">
+      AND  repdw =#{repdw}
+    </if>
+
+
+  </select>
+  <select id="queryDirectoryReplyLstPager" resultType="com.zking.ssm.opinion.model.Reply"
+          parameterType="com.zking.ssm.opinion.model.Reply">
+    SELECT repid,repname,caidate,rephfnr,repdworr,repdate,xd.dicname AS repdw FROM x_reply xr LEFT JOIN x_dict xd ON xr.repdw = xd.dicvalue AND dictype='opdwtype'
+    WHERE  1=1 AND  rephfnr IS NOT NULL
+    <if test="null!=repid and 0!=repid">
+      AND  repid like concat(concat('%',#{repid}),'%')
+    </if>
+    <if test="null!=rephfnr and ''!=rephfnr">
+      AND  rephfnr like concat(concat('%',#{rephfnr}),'%')
+    </if>
+    <if test="null!=repdw and ''!=repdw">
+      AND  repdw =#{repdw}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from x_reply
+    where repid = #{repid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.opinion.model.Reply" >
+    insert into x_reply ( repname, repdw,
+      rephfnr, repdworr,
+      repdate)
+    values ( #{repname,jdbcType=VARCHAR}, #{repdw,jdbcType=VARCHAR},
+       #{rephfnr,jdbcType=VARCHAR}, #{repdworr,jdbcType=VARCHAR},
+      #{repdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.opinion.model.Reply" >
+    insert into x_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="repid != null" >
+        repid,
+      </if>
+      <if test="repname != null" >
+        repname,
+      </if>
+      <if test="repdw != null" >
+        repdw,
+      </if>
+      <if test="caidate != null" >
+        caidate,
+      </if>
+      <if test="rephfnr != null" >
+        rephfnr,
+      </if>
+      <if test="repdworr != null" >
+        repdworr,
+      </if>
+      <if test="repdate != null" >
+        repdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="repid != null" >
+        #{repid,jdbcType=INTEGER},
+      </if>
+      <if test="repname != null" >
+        #{repname,jdbcType=VARCHAR},
+      </if>
+      <if test="repdw != null" >
+        #{repdw,jdbcType=VARCHAR},
+      </if>
+      <if test="caidate != null" >
+        #{caidate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rephfnr != null" >
+        #{rephfnr,jdbcType=VARCHAR},
+      </if>
+      <if test="repdworr != null" >
+        #{repdworr,jdbcType=VARCHAR},
+      </if>
+      <if test="repdate != null" >
+        #{repdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.opinion.model.Reply" >
+    update x_reply
+    <set >
+      <if test="repname != null" >
+        repname = #{repname,jdbcType=VARCHAR},
+      </if>
+      <if test="repdw != null" >
+        repdw = #{repdw,jdbcType=VARCHAR},
+      </if>
+      <if test="caidate != null" >
+        caidate = #{caidate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rephfnr != null" >
+        rephfnr = #{rephfnr,jdbcType=VARCHAR},
+      </if>
+      <if test="repdworr != null" >
+        repdworr = #{repdworr,jdbcType=VARCHAR},
+      </if>
+      <if test="repdate != null" >
+        repdate = #{repdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where repid = #{repid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.opinion.model.Reply" >
+    update x_reply
+    set repname = #{repname,jdbcType=VARCHAR},
+      repdw = #{repdw,jdbcType=VARCHAR},
+      caidate = #{caidate,jdbcType=TIMESTAMP},
+      rephfnr = #{rephfnr,jdbcType=VARCHAR},
+      repdworr = #{repdworr,jdbcType=VARCHAR},
+      repdate = #{repdate,jdbcType=TIMESTAMP}
+    where repid = #{repid,jdbcType=INTEGER}
+  </update>
+  <update id="updateReply" parameterType="com.zking.ssm.opinion.model.Reply">
+    update x_reply set rephfnr=#{rephfnr},repdworr=#{repdworr},
+    repdate=#{repdate} where repid = #{repid}
+  </update>
+</mapper>

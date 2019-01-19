@@ -7,8 +7,7 @@
       <arg column="oplgbt" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="userid" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="opltype" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="opdl" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="opxl" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="opdwtype" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="oplgrordw" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="optel" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="opbsrsf" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -24,7 +23,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    opid, oplgbt, userid, opltype, opdl, opxl, oplgrordw, optel, opbsrsf, opbssj, opbsr, 
+    opid, oplgbt, userid, opltype, opdwtype,oplgrordw, optel, opbsrsf, opbssj, opbsr,
     opqfld, pub, opjtnr, fileid, proid, optjr, optjtime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -34,7 +33,7 @@
     where opid = #{opid,jdbcType=INTEGER}
   </select>
   <select id="queryOpinionPager" resultType="map" parameterType="com.zking.ssm.opinion.model.Opinion">
-    SELECT opid,oplgbt,userid,xd1.dicname AS opltype,opdl,opxl,oplgrordw,optel,xd2.dicname AS opbsrsf,opbsr,opqfld,pub,opjtnr,fileid,
+    SELECT opid,oplgbt,userid,xd1.dicname AS opltype,opdwtype,oplgrordw,optel,xd2.dicname AS opbsrsf,opbsr,opqfld,pub,opjtnr,fileid,
     proid,optjr,optjtime
     FROM X_Opinion xo LEFT JOIN x_dict xd1  ON xo.opltype=xd1.dicvalue AND xd1.dictype='opltype'
     LEFT JOIN x_dict xd2 ON xo.opbsrsf=xd2.dicvalue AND xd2.dictype='bsr'
@@ -60,6 +59,25 @@
     <if test="null!=end and ''!=end">
       AND opbssj &lt;=#{end}
     </if>
+    <if test="null!=opdwtype and ''!=opdwtype">
+      AND opdwtype =#{opdwtype}
+    </if>
+    <if test="null!=opid and 0!=opid">
+      and opid LIKE  concat(concat('%',#{opid}),'%')
+    </if>
+    ORDER BY optjtime desc
+  </select>
+  <select id="queryCount" resultType="map" parameterType="com.zking.ssm.opinion.model.Opinion">
+    SELECT COUNT(*) AS count,xd.dicname AS opbsrsf FROM x_opinion
+    xo INNER JOIN x_dict xd ON  xo.opbsrsf=xd.dicvalue AND xd.dictype='bsr' WHERE 1=1
+    <if test="null!=start and ''!=start" >
+      AND optjtime &gt;#{start}
+    </if>
+    <if test="null!=end and ''!=end">
+      AND  optjtime &lt;#{end}
+    </if>
+    GROUP BY opbsrsf
+
   </select>
 
 
@@ -69,14 +87,14 @@
   </delete>
   <insert id="insert" parameterType="com.zking.ssm.opinion.model.Opinion" >
     insert into x_opinion ( oplgbt, userid,
-      opdl, opxl,
+      opdwtype,
       oplgrordw, optel, opbsrsf, 
       opbssj, opbsr, opqfld, 
       pub, opjtnr, fileid, 
        optjr
       )
     values (#{oplgbt,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER},
-       #{opdl,jdbcType=VARCHAR}, #{opxl,jdbcType=VARCHAR},
+       #{opdwtype,jdbcType=VARCHAR},
       #{oplgrordw,jdbcType=VARCHAR}, #{optel,jdbcType=VARCHAR}, #{opbsrsf,jdbcType=VARCHAR}, 
       #{opbssj,jdbcType=TIMESTAMP}, #{opbsr,jdbcType=VARCHAR}, #{opqfld,jdbcType=VARCHAR}, 
       #{pub,jdbcType=VARCHAR}, #{opjtnr,jdbcType=VARCHAR}, #{fileid,jdbcType=VARCHAR}, 
@@ -96,12 +114,10 @@
       <if test="opltype != null" >
         opltype,
       </if>
-      <if test="opdl != null" >
-        opdl,
+      <if test="opdwtype != null" >
+        opdwtype,
       </if>
-      <if test="opxl != null" >
-        opxl,
-      </if>
+
       <if test="oplgrordw != null" >
         oplgrordw,
       </if>
@@ -148,12 +164,10 @@
       <if test="opltype != null" >
         #{opltype,jdbcType=VARCHAR},
       </if>
-      <if test="opdl != null" >
-        #{opdl,jdbcType=VARCHAR},
+      <if test="opdwtype != null" >
+        #{opdwtype,jdbcType=VARCHAR},
       </if>
-      <if test="opxl != null" >
-        #{opxl,jdbcType=VARCHAR},
-      </if>
+
       <if test="oplgrordw != null" >
         #{oplgrordw,jdbcType=VARCHAR},
       </if>
@@ -202,9 +216,7 @@
       <if test="opltype != null" >
         opltype = #{opltype,jdbcType=VARCHAR},
       </if>
-      <if test="opdl != null" >
-        opdl = #{opdl,jdbcType=VARCHAR},
-      </if>
+
       <if test="opxl != null" >
         opxl = #{opxl,jdbcType=VARCHAR},
       </if>
@@ -252,8 +264,7 @@
     set oplgbt = #{oplgbt,jdbcType=VARCHAR},
       userid = #{userid,jdbcType=INTEGER},
       opltype = #{opltype,jdbcType=VARCHAR},
-      opdl = #{opdl,jdbcType=VARCHAR},
-      opxl = #{opxl,jdbcType=VARCHAR},
+      opdwtype = #{opdwtype,jdbcType=VARCHAR},
       oplgrordw = #{oplgrordw,jdbcType=VARCHAR},
       optel = #{optel,jdbcType=VARCHAR},
       opbsrsf = #{opbsrsf,jdbcType=VARCHAR},

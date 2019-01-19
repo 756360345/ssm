@@ -14,6 +14,8 @@ public interface IOpinionService {
     List<Map<String,Object>> queryOpinionPager(Opinion opinion, PageBean pageBean);
 
     int UpdateType(Opinion opinion);
+    int deleteByPrimaryKey(Integer opid);
+    List<Map<String,Object>> queryCount(Opinion opinion);
 
 
 }

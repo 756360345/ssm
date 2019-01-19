@@ -4,6 +4,7 @@ import com.zking.ssm.system.model.Module;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ModuleMapper {
@@ -20,4 +21,6 @@ public interface ModuleMapper {
     int updateByPrimaryKey(Module record);
 
     List<Module> queryModule();
+
+    List<Map<String,Object>> queryModuleLst(Integer pid);
 }

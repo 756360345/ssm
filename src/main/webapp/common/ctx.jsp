@@ -8,6 +8,7 @@
 <base href="${ctx }/">
 <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="js/layui/layui.js"></script>
+<script type="text/javascript" src="js/layui/layui-xtree.js"></script>
 <%--<script type="text/javascript" src="../js/util/date.js"></script>--%>
 <link rel="stylesheet" type="text/css" href="${ctx}/js/layui/css/layui.css" media="all">
 <link rel="stylesheet" type="text/css" href="${ctx}/css/inclubd.css" media="all">

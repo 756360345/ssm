@@ -34,7 +34,9 @@ $(function() {
                         'start':data.field.start,
                         'end':dateTime,
                         'opbsr':data.field.opbsr,
-                        'opltype':data.field.opltype
+                        'opltype':data.field.opltype,
+						'opdwtype':data.field.opdwtype,
+						'opid':data.field.opid
 					}
 					initTable(whe)
 					return false;
@@ -47,6 +49,7 @@ $(function() {
 			});
 	initFwzt();
     initType();
+    initDL();
 
 });
 function initTable(wher) {
@@ -113,7 +116,8 @@ function initTable(wher) {
 
             },{fixed: 'right', title:'操作',width:200,align:'center',
 				templet : function(res) {
-                return  "<a  lay-event='baos' title='报送'><i class='fa fa-hand-o-up fa-2x'></i></a>";
+                return  "<a  lay-event='baos' title='报送'><i class='fa fa-hand-o-up fa-2x'></i></a>" +
+                         "&nbsp;&nbsp;&nbsp;<a   lay-event='delete' title='删除'><i class=\"layui-icon-close-fill\" style=\"font-size: 30px; color: #1E9FFF;\"></i> </a>";
 				},
 
 			}
@@ -133,33 +137,88 @@ function initTable(wher) {
 			    },
 		});
 		table.on('tool(test)', function(obj){
+
 		    if(obj.event === 'baos'){
+		    			if(obj.data.opltype!="未报送"){
+		    				layer.confirm("不能重复同样的操作");
+		    				return false;
+						}
                         layer.confirm('确认报送？', function(index){
                             $.ajax({
                                 url : "opinion/updateType",
                                 data : {
                                     "opid" : obj.data.opid,
+									"oplgbt":obj.data.oplgbt,
+									"oppssj":obj.data.opbssj,
+									"oplgrordw":obj.data.oplgrordw,
+                                    "opdwtype":obj.data.opdwtype
                                 },
                                 dataType : "json",
                                 type : "post",
                                 async : false,
                                 success : function(data) {
                                     if(data.success){
-                                        alert(data.message);
+                                        layer.alert(data.message);
                                         tables.reload();
                                     }else{
-                                        alert("系统繁忙");
+                                        layer.alert(data.message);
                                     }
                                 }
                             });
 
                             layer.close(index);
                         });
-        }
+        }else if(obj.event === 'delete'){
+		        if(obj.data.opltype=='已报送'){
+		            layer.alert("已报送，不能删除");
+		            return false;
+                }
+                layer.confirm('确认删除？', function(index){
+                    $.ajax({
+                        url : "opinion/deleteOpinion",
+                        data : {
+                            "opid" : obj.data.opid,
+                        },
+                        dataType : "json",
+                        type : "post",
+                        async : false,
+                        success : function(data) {
+                            if(data.success){
+                                layer.alert(data.message);
+                                tables.reload();
+                            }else{
+                                layer.alert(data.message);
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
     });
 			
 	});
 }
+//初始化单位类型
+function initDL() {
+    var d = "<option value='' >请选择单位类型</option>";
+    $.ajax({
+        url : "Dict/queryDictForType",
+        data : {
+            "dictype" : "opdwtype"
+        },
+        dataType : "json",
+        Type : "post",
+        async : false,
+        success : function(data) {
+            for (var i = 0; i < data.length; i++) {
+                d += "<option value='" + data[i].dicvalue + "'>"
+                    + data[i].dicname + "</option>";
+            }
+            $("select[name=opdwtype]").html(d);
+        }
+    });
+}
+
 function initFwzt() {
 	var d = "<option value='' >---请选择类型---</option>";
 	$.ajax({

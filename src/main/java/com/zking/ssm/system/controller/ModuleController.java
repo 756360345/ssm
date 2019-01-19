@@ -1,6 +1,7 @@
 package com.zking.ssm.system.controller;
 
 import com.zking.ssm.system.model.Module;
+import com.zking.ssm.system.model.Role;
 import com.zking.ssm.system.service.IModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,4 +54,24 @@ public class ModuleController {
         }
         return list;
     }
+    //初始化模块信息
+    @RequestMapping("/initModule")
+    public Map<String,Object> inintModule(Role role){
+        List<Map<String, Object>> lst = moduleService.queryModuleLst(role.getRoleid());
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",lst);
+        return  map;
+    }
+
+    public String querySysRightModule(){
+//        @SuppressWarnings("unchecked")
+//        List<SysRight> lst = (List<SysRight>)session.getAttribute("module");
+//        System.out.println(lst);
+//        List<Map<String, Object>> list2 = children(lst, sysRight.getRightParentCode());
+//        objmapper.writeValue(response.getOutputStream(), list2);
+        return null;
+    }
+
+
+
 }

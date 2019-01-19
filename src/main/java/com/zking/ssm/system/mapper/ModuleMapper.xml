@@ -30,6 +30,10 @@
       from module where pid!=99
 
     </select>
+    <select id="queryModuleLst" resultType="map">
+      select <include refid="Base_Column_List"/>
+      from module where pid=#{pid}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from module
     where id = #{id,jdbcType=VARCHAR}

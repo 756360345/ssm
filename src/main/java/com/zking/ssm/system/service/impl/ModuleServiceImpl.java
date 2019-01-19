@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+import java.util.Map;
+@Transactional
 @Service
 public class ModuleServiceImpl implements IModuleService {
     @Autowired
@@ -17,5 +18,10 @@ public class ModuleServiceImpl implements IModuleService {
     @Override
     public List<Module> queryModule() {
         return moduleMapper.queryModule();
+    }
+
+    @Override
+    public List<Map<String, Object>> queryModuleLst(Integer pid) {
+        return moduleMapper.queryModuleLst(pid);
     }
 }

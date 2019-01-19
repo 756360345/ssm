@@ -31,4 +31,14 @@ public class OpinionServiceImpl implements IOpinionService {
     public int UpdateType(Opinion opinion) {
         return opinionMapper.UpdateType(opinion);
     }
+
+    @Override
+    public int deleteByPrimaryKey(Integer opid) {
+        return opinionMapper.deleteByPrimaryKey(opid);
+    }
+
+    @Override
+    public List<Map<String,Object>> queryCount(Opinion opinion) {
+        return opinionMapper.queryCount(opinion);
+    }
 }

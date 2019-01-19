@@ -60,16 +60,16 @@
                 <label class="layui-form-label">反映人：</label>
                 <div class="layui-input-block" style="width: 250px">
                     <input type="text" name="opbsr" autocomplete="off" placeholder="请输入" class="layui-input">
-                    </select>
+
                 </div>
             </div>
         </div>
         <div class="layui-col-xs6 layui-col-sm6 layui-col-md4"  style="margin-left: -60px">
             <div class="layui-form-item">
-                <label class="layui-form-label">提案号：</label>
+                <label class="layui-form-label">民意编号：</label>
                 <div class="layui-input-block" style="width: 250px">
-                    <select name="svr_status"  id="svr_status1k" lay-filter="svr_status">
-                    </select>
+                    <input type="text" name="opid" autocomplete="off" placeholder="请输入" class="layui-input">
+
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
         <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
             <label class="layui-form-label">单位类型：</label>
             <div class="layui-input-block" style="width: 250px">
-                <select name="svr_status"  id="svr_status11" lay-filter="svr_status">
+                <select name="opdwtype"  id="opdwtype">
                 </select>
             </div>
         </div>

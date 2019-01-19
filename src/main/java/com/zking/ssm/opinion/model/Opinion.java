@@ -15,9 +15,8 @@ public class Opinion implements Serializable{
 
     private String opltype;
 
-    private String opdl;
+    private String opdwtype;
 
-    private String opxl;
 
     private String oplgrordw;
 
@@ -62,26 +61,7 @@ public class Opinion implements Serializable{
         this.end = end;
     }
 
-    public Opinion(Integer opid, String oplgbt, Integer userid, String opltype, String opdl, String opxl, String oplgrordw, String optel, String opbsrsf, Date opbssj, String opbsr, String opqfld, String pub, String opjtnr, String fileid, Integer proid, String optjr, Date optjtime) {
-        this.opid = opid;
-        this.oplgbt = oplgbt;
-        this.userid = userid;
-        this.opltype = opltype;
-        this.opdl = opdl;
-        this.opxl = opxl;
-        this.oplgrordw = oplgrordw;
-        this.optel = optel;
-        this.opbsrsf = opbsrsf;
-        this.opbssj = opbssj;
-        this.opbsr = opbsr;
-        this.opqfld = opqfld;
-        this.pub = pub;
-        this.opjtnr = opjtnr;
-        this.fileid = fileid;
-        this.proid = proid;
-        this.optjr = optjr;
-        this.optjtime = optjtime;
-    }
+
 
     public Opinion() {
         super();
@@ -119,20 +99,35 @@ public class Opinion implements Serializable{
         this.opltype = opltype;
     }
 
-    public String getOpdl() {
-        return opdl;
+    public String getOpdwtype() {
+        return opdwtype;
     }
 
-    public void setOpdl(String opdl) {
-        this.opdl = opdl;
+    public void setOpdwtype(String opdwtype) {
+        this.opdwtype = opdwtype;
     }
 
-    public String getOpxl() {
-        return opxl;
-    }
+    public Opinion(Integer opid, String oplgbt, Integer userid, String opltype, String opdwtype, String oplgrordw, String optel, String opbsrsf, Date opbssj, String opbsr, String opqfld, String pub, String opjtnr, String fileid, Integer proid, String optjr, Date optjtime, String start, String end) {
 
-    public void setOpxl(String opxl) {
-        this.opxl = opxl;
+        this.opid = opid;
+        this.oplgbt = oplgbt;
+        this.userid = userid;
+        this.opltype = opltype;
+        this.opdwtype = opdwtype;
+        this.oplgrordw = oplgrordw;
+        this.optel = optel;
+        this.opbsrsf = opbsrsf;
+        this.opbssj = opbssj;
+        this.opbsr = opbsr;
+        this.opqfld = opqfld;
+        this.pub = pub;
+        this.opjtnr = opjtnr;
+        this.fileid = fileid;
+        this.proid = proid;
+        this.optjr = optjr;
+        this.optjtime = optjtime;
+        this.start = start;
+        this.end = end;
     }
 
     public String getOplgrordw() {
